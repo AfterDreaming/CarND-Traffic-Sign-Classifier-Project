@@ -100,7 +100,7 @@ To train the model, I used an Adam optimizer with batch size 128, 50 epoch, and 
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 My final model results were:
-* training set accuracy of ?
+* training set accuracy of 100%
 * validation set accuracy of 93.7%
 * test set accuracy of 93.5%
 
@@ -142,11 +142,12 @@ Here are the results of the prediction:
 
 | Image			        |     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| Speed limit (30km/h)  | Speed limit (30km/h)  						| 
+| Priority road     	| Priority road									|
+| No vehicles		    | No vehicles     								|
+| Road work				| Road work										|
+| Wild animals crossing	| Bumpy Road					 				|
+
 
 
 The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
