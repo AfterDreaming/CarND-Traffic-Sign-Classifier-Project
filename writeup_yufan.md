@@ -19,14 +19,14 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/visualization.jpg "Visualization"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
-[image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
+[image1]: ./report_image/data_visualization.png "Visualization"
+[image2]: ./report_image/before_preprocess.png "Before Preprocess"
+[image3]: ./report_image/after_preprocess.png "After Preprocess"
+[image4]: ./web_images/1.png "Traffic Sign 1"
+[image5]: ./web_images/12.png "Traffic Sign 2"
+[image6]: ./web_images/15.png "Traffic Sign 3"
+[image7]: ./web_images/25.png "Traffic Sign 4"
+[image8]: ./web_images/31.png "Traffic Sign 5"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
@@ -53,9 +53,9 @@ signs data set:
 
 #### 2. Include an exploratory visualization of the dataset.
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data is distributed. In general, each label has a fair amount of data example but the data example with different label is not evenly distributed, for example, lable 2 and 3 have more than 1750 examples while label 41, 42 only have 210 examples. Because there aren't many examples to train(only 34799 training examples for 43 labels), the final model may have less accurary when detecting traffic sign of label with few examples.
+Here is an exploratory visualization of the data set. It is a bar chart showing how the data is distributed. In general, each label has a fair amount of data examples but the different labeled examples  are not evenly distributed, for example, lable 2 and 3 have more than 1750 examples while label 41, 42 only have 210 examples. Because there aren't many examples to train(only 34799 training examples for 43 labels), the final model may have less accurary when detecting traffic sign of label with few examples.
 
-![alt text][image1]
+![data distribution][image1]
 
 ### Design and Test a Model Architecture
 
@@ -66,6 +66,11 @@ As a first step, I normalized the image, because of the characteristics of the a
 I did not apply grayscale to the images. The reason is that the grayscale is a feature which can be derived from the image itself and the deep learning model can find it by itself if it is helpful. Although I didn't think grayscale will help, I still tried this method. The final result was not improve which confirm my theory.
 
 Here is an example of a traffic sign image before and after the image normalization.
+
+Before:
+![Before preprocess][image2]
+![After preprocess][image3]
+
 
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
@@ -90,7 +95,6 @@ My final model consisted of the following layers:
 | RELU		            |            									|
 | Fully connected		| 84.        									|
 | Softmax				|            									|
- 
 
 
 #### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
@@ -101,28 +105,18 @@ To train the model, I used an Adam optimizer with batch size 128, 50 epoch, and 
 
 My final model results were:
 * training set accuracy of 100%
-* validation set accuracy of 93.7%
-* test set accuracy of 93.5%
-
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
-
-Because of the image size and quality, adding convulotion layers is not very helpful. I add an additional fully connected layer and this change boost the accuracy from 89% to 94%.
-
-
+* validation set accuracy of 94.2%
+* test set accuracy of 93.2%
 
 
 If a well known architecture was chosen:
 * What architecture was chosen?
 ** LeNet
+
 * Why did you believe it would be relevant to the traffic sign application?
-** LeNet is a well known architechture for image recognition and its structure is relative simple comparing with some hundred layers model. It is easy to train and effective.
+** LeNet is a well known architechture for image recognition and its structure is relative simple comparing with some hundred layers model. It is easy to train and effective. I think it is a good starting points for image related AI questions.
 * How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
-** LeNet can get 89% across training, validation, and test set without any modification. The result is very impressive considering the limited data we have.
+** LeNet can get 89% accuracy across training, validation, and test set without any modification. The result is very impressive considering the limited data we have. Because the trainging set accuracy was not good enough, first, I added additional a convolution layer and pooling layer. However, the accuracy was not improved. The reason is because our images have small size(32*32) and two convolutional layers is enough for extracting image features. Therefore, I add an additional fully connected layer to find more relationship between image features. After I got 100% training accuracy, I added dropout in the model, however, the validation accuracy was not improved. Then I decide to remove the dropout since it is not very helpful in this question.
  
 
 ### Test a Model on New Images
@@ -131,10 +125,15 @@ If a well known architecture was chosen:
 
 Here are five German traffic signs that I found on the web:
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
+![31][image8]![1][image4] ![12][image5] ![15][image6] 
+![25][image7] 
 
-The first image might be difficult to classify because ...
+The first one have many details but it is unclease because of the image quality.
+The second image might be difficult to classify because there is noisy background.
+The third image might be difficult to classify because the background color is simiar to the most part of the sign.
+The forth image should be easy to classify.
+The fifth one contains lots of details but the image is quite blur.
+
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
@@ -146,30 +145,80 @@ Here are the results of the prediction:
 | Priority road     	| Priority road									|
 | No vehicles		    | No vehicles     								|
 | Road work				| Road work										|
-| Wild animals crossing	| Bumpy Road					 				|
+| Wild animals crossing	| Right-of-way at the next intersection			|
 
-
-
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of 93% accuracy. The reson is that test set has much more example and provides better accuracy estimate.
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
+The code for making predictions on my final ∂model is located in the 11th cell of the Ipython notebook.
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+For the first image, the model is relatively sure that this is a Priority road (probability of 1), and the image does not match the prediction (it should be Wild animals crossing). The top five soft max probabilities were
 
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+| 1        				| Priority road  								| 
+| 0     				| Traffic signals 								|
+| 0						| Wild animals crossing							|
+| 0	      				| Speed limit (50km/h)							|
+| 0				  	    | Stop    										|
 
 
-For the second image ... 
+For the second image, the model is relatively sure that this is a Speed limit (30km/h) (probability of 1), and the image does contain this traffic sign. The top five soft max probabilities were
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| 1         			| Speed limit (30km/h)  						| 
+| 0     				| Speed limit (20km/h) 							|
+| 0						| Speed limit (70km/h)							|
+| 0	      				| Speed limit (50km/h)			 				|
+| 0			    		| Speed limit (120km/h)    						|
 
-### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-#### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
+
+For the third image, the model is relatively sure that this is a Priority road (probability of 1), and the image does contain this traffic sign. The top five soft max probabilities were
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| 1        				| Priority road 								| 
+| 0     				| End of no passing								|
+| 0						| Stop											|
+| 0	      				| No entry							 			|
+| 0			   			| Keep right     								|
+
+
+For the forth image, the model is relatively sure that this is a No vehicles (30km/h) (probability of .999), and the image does contain this traffic sign. The top five soft max probabilities were
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| .999         			| No vehicles  									| 
+| .0     				| Speed limit (80km/h)							|
+| .0					| Speed limit (120km/h)							|
+| .0	      			| Speed limit (70km/h)			 				|
+| .0				    | Speed limit (30km/h)    						|
+
+For the fifth image, the model is relatively sure that this is a Road work (probability of .998), and the image does contain this traffic sign. The top five soft max probabilities were
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| .998         			| Road work  									| 
+| .0009     			| Pedestrians									|
+| .0002					| Speed limit (100km/h)							|
+| .0	      			| Children crossing					 			|
+| .0				    | Traffic signals     							|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
