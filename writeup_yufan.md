@@ -22,11 +22,11 @@ The goals / steps of this project are the following:
 [image1]: ./report_image/data_visualization.png "Visualization"
 [image2]: ./report_image/before_preprocess.png "Before Preprocess"
 [image3]: ./report_image/after_preprocess.png "After Preprocess"
-[image4]: ./web_images/1.png "Traffic Sign 1"
-[image5]: ./web_images/12.png "Traffic Sign 2"
-[image6]: ./web_images/15.png "Traffic Sign 3"
-[image7]: ./web_images/25.png "Traffic Sign 4"
-[image8]: ./web_images/31.png "Traffic Sign 5"
+[image4]: ./web_images/1.jpeg "Traffic Sign 1"
+[image5]: ./web_images/12.jpeg "Traffic Sign 2"
+[image6]: ./web_images/15.jpeg "Traffic Sign 3"
+[image7]: ./web_images/25.jpeg "Traffic Sign 4"
+[image8]: ./web_images/31.jpeg "Traffic Sign 5"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
@@ -53,7 +53,7 @@ signs data set:
 
 #### 2. Include an exploratory visualization of the dataset.
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data is distributed. In general, each label has a fair amount of data examples but the different labeled examples  are not evenly distributed, for example, lable 2 and 3 have more than 1750 examples while label 41, 42 only have 210 examples. Because there aren't many examples to train(only 34799 training examples for 43 labels), the final model may have less accurary when detecting traffic sign of label with few examples.
+Here is an exploratory visualization of the data set. It is a bar chart showing how the data is distributed. In general, each label has a fair amount of data examples but the different labeled examples are not evenly distributed, for example, label 2 and 3 have more than 1750 examples while label 41, 42 only have 210 examples. Because there aren't many examples to train(only 34799 training examples for 43 labels), the final model may have less accuracy when detecting traffic sign of label with few examples.
 
 ![data distribution][image1]
 
@@ -61,14 +61,15 @@ Here is an exploratory visualization of the data set. It is a bar chart showing 
 
 #### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
-As a first step, I normalized the image, because of the characteristics of the activation functions. Most of activation function(for example, tanh, and ReLU) have big difference between the left and right side of the origin point. Normalization the images helps the activation function work better.
+As a first step, I normalized the image, because of the characteristics of the activation functions. Most of activation function(for example, tanh, and ReLU) have big difference between the left and right side of the origin point. Normalization of the images helps the activation function work better.
 
-I did not apply grayscale to the images. The reason is that the grayscale is a feature which can be derived from the image itself and the deep learning model can find it by itself if it is helpful. Although I didn't think grayscale will help, I still tried this method. The final result was not improve which confirm my theory.
+I did not apply grayscale to the images. The reason is that the grayscale is a feature which can be derived from the image itself and the deep learning model can find it by itself if it is helpful. Although I didn't think grayscale will help, I still tried this method. The final result was not improved which confirm my theory.
 
 Here is an example of a traffic sign image before and after the image normalization.
 
 Before:
 ![Before preprocess][image2]
+After:
 ![After preprocess][image3]
 
 
@@ -116,7 +117,7 @@ If a well known architecture was chosen:
 * Why did you believe it would be relevant to the traffic sign application?
 ** LeNet is a well known architechture for image recognition and its structure is relative simple comparing with some hundred layers model. It is easy to train and effective. I think it is a good starting points for image related AI questions.
 * How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
-** LeNet can get 89% accuracy across training, validation, and test set without any modification. The result is very impressive considering the limited data we have. Because the trainging set accuracy was not good enough, first, I added additional a convolution layer and pooling layer. However, the accuracy was not improved. The reason is because our images have small size(32*32) and two convolutional layers is enough for extracting image features. Therefore, I add an additional fully connected layer to find more relationship between image features. After I got 100% training accuracy, I added dropout in the model, however, the validation accuracy was not improved. Then I decide to remove the dropout since it is not very helpful in this question.
+** LeNet can get 89% accuracy across training, validation, and test set without any modification. The result is very impressive considering the limited data we have. Because the training set accuracy was not good enough, first, I added additional a convolution layer and pooling layer. However, the accuracy was not improved. The reason is because our images have small size(32*32) and two convolutional layers are enough for extracting image features. Therefore, I add an additional fully connected layer to find more relationship between image features. After I got 100% training accuracy, I added dropout in the model, however, the validation accuracy was not improved. Then I decide to remove the dropout since it is not very helpful in this question.
  
 
 ### Test a Model on New Images
@@ -125,14 +126,14 @@ If a well known architecture was chosen:
 
 Here are five German traffic signs that I found on the web:
 
-![31][image8]![1][image4] ![12][image5] ![15][image6] 
-![25][image7] 
+![Wild animals crossing][image8]![Speed limit (30km/h)][image4] ![Priority road][image5] ![No vehicles][image6] 
+![Road work][image7] 
 
-The first one have many details but it is unclease because of the image quality.
+The first is difficult to classify because of the image quality and missing details.
 The second image might be difficult to classify because there is noisy background.
-The third image might be difficult to classify because the background color is simiar to the most part of the sign.
+The third image might be difficult to classify because the background color is similar to the most part of the sign.
 The forth image should be easy to classify.
-The fifth one contains lots of details but the image is quite blur.
+The fifth one contains lots of details but the image is quite blurred.
 
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
@@ -147,11 +148,9 @@ Here are the results of the prediction:
 | Road work				| Road work										|
 | Wild animals crossing	| Right-of-way at the next intersection			|
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of 93% accuracy. The reson is that test set has much more example and provides better accuracy estimate.
+The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of 93% accuracy. The reason is that test set has much more examples and provides better accuracy estimate.
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
-
-The code for making predictions on my final ∂model is located in the 11th cell of the Ipython notebook.
 
 For the first image, the model is relatively sure that this is a Priority road (probability of 1), and the image does not match the prediction (it should be Wild animals crossing). The top five soft max probabilities were
 
@@ -165,6 +164,7 @@ For the first image, the model is relatively sure that this is a Priority road (
 
 
 For the second image, the model is relatively sure that this is a Speed limit (30km/h) (probability of 1), and the image does contain this traffic sign. The top five soft max probabilities were
+
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | 1         			| Speed limit (30km/h)  						| 
